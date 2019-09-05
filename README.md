@@ -47,7 +47,7 @@ The Tiles UI should now be available at http://localhost:3000
 #### Nginx
 
 The following is an Nginx configuration block for both frontend and backend:
-
+_This section may not apply when deployed via kubernetes_
 ```sh
 server {
     listen               443  ssl;
