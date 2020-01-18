@@ -80,7 +80,7 @@ server {
 }
 ```
 
-#### Docker
+# Docker
 
 The Tiles UI can also be launched via Docker using the following example:
 
@@ -89,7 +89,7 @@ docker build -t Fairbanks-io/tiles-client .
 docker run -d -p 80:80 --name 'tiles-client' Fairbanks-io/tiles-client
 ```
 
-#### Kubernetes
+# Kubernetes
 _Depends on helm v2 or v3 and a default storage provisioner_
 
 Create namespace 'tiles'
