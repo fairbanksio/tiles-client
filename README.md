@@ -86,7 +86,7 @@ The Tiles UI can also be launched via Docker using the following example:
 
 ```sh
 docker build -t Fairbanks-io/tiles-client .
-docker run -d -p 3000:3000 --name 'tiles-client' Fairbanks-io/tiles-client
+docker run -d -p 80:80 --name 'tiles-client' Fairbanks-io/tiles-client
 ```
 
 #### Kubernetes
@@ -117,6 +117,7 @@ helm install tilesdb -f values-production.yaml stable/mongodb --set mongodbUsern
 # Helm v2
 helm install --name tilesdb -f values-production.yaml stable/mongodb --set --set mongodbUsername=TilesDB --set mongodbPassword=${DB_PASS} --set mongodbDatabase=tiles --namespace tiles
 ```
+_check that it's ready `kubectl get po -n tiles` before moving on_
 
 Deploy Session Cache
 ```sh
@@ -131,6 +132,7 @@ Create secrets
 # If the name of the service (such as helm naming releases oddly), you may need to update the hostnames for both mongoURI and redishost to whatever the service names are for the respective installs
 kubectl create secret generic tiles-config --from-literal=mongouri=mongodb://TilesDB:${DB_PASS}@tilesdb-mongodb:27017/tiles --from-literal=redishost=tiles-session-db-redis-master -n tiles
 ```
+_check all pods ready `kubectl get po -n tiles` before moving on_
 
 Deploy Tiles (Deployments, Services, Ingresses, and HPAs)
 _You may want to update the HOST values in the ingress portion of yaml before applying below_
@@ -138,9 +140,16 @@ _You may want to update the HOST values in the ingress portion of yaml before ap
 kubectl apply -f kubernetes.yml
 ```
 
+
+
 Verify deployment
 ```sh
+# make sure all pods running
 kubectl get po -n tiles
+# View logs of api to make sure it's running
+kubectel get po -n tiles tiles-api-XXXXXXXXXXX
+# make sure cert is available
+kubectl get cert -n tiles
 ```
 
 Unset DB Pass
