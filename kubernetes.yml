@@ -128,4 +128,31 @@ spec:
         backend:
           serviceName: tiles-api
           servicePort: 80
-  
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tiles-api
+  namespace: tiles
+spec:
+  maxReplicas: 10
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tiles-api
+  targetCPUUtilizationPercentage: 25
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tiles-client
+  namespace: tiles
+spec:
+  maxReplicas: 10
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tiles-client
+  targetCPUUtilizationPercentage: 25
