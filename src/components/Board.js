@@ -17,7 +17,7 @@ import 'react-chat-widget/lib/styles.css';
 const nameGetter = new Chance();
 const getAName = () => nameGetter.first();
 
-const socketUrl = "https://" + process.env.REACT_APP_API;
+const socketUrl = "https://" + window.REACT_APP_API;
   // Constructor for Shape objects to hold data for all drawn objects.
 // For now they will just be defined as rectangles.
 function Shape(x, y, w, h, fill) {
@@ -74,7 +74,7 @@ class Board extends Component {
     // Get all users from API
     this.setState({fetchingLog: true})
     axios
-      .get('https://' + process.env.REACT_APP_API + '/tiles/' + this.props.match.params.boardId + '/log')
+      .get('https://' + window.REACT_APP_API + '/tiles/' + this.props.match.params.boardId + '/log')
       .then(res => {
         this.setState({ data: res.data ? res.data : [], isFetching:false})
         this.setState({fetchingLog: false})
