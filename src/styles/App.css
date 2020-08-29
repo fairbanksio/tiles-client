@@ -38,8 +38,8 @@ body {
 }
 @media screen and (prefers-color-scheme: light) {
   body {
-    background-color: #36D8B7;
-    color: #222222;
+    background-color: #222222;
+    color: #36D8B7;
     font-family: 'Roboto', sans-serif;
   }
 }

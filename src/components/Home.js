@@ -30,7 +30,7 @@ class Home extends Component {
       var color = "#222";
       // Get all users from API
       axios
-        .post('https://' + process.env.REACT_APP_API + '/tiles',  {name: name, baseColor: color})
+        .post('https://' + window.REACT_APP_API + '/tiles',  {name: name, baseColor: color})
         .then(res => {
           if(res.data.success){
             this.props.history.push('/'+ res.data.boardId);
@@ -51,7 +51,7 @@ class Home extends Component {
   getAllBoards = () => {
     // Get all users from API
     axios
-      .get('https://' + process.env.REACT_APP_API + '/tiles')
+      .get('https://' + window.REACT_APP_API + '/tiles')
       .then(res => {
         this.setState({ data: res.data ? res.data : [], isFetching:false})
       })
