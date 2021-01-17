@@ -1,4 +1,13 @@
-# 0.1.0 (2020-10-14)
+# [0.2.0](https://github.com/bsord/tiles-client/compare/0.1.0...0.2.0) (2021-01-17)
+
+
+### Features
+
+* **autoscale:** add HA support ([9e59e7d](https://github.com/bsord/tiles-client/commit/9e59e7de961af78500776ec3396b9f7a2e94e181))
+
+
+
+# [0.1.0](https://github.com/bsord/tiles-client/compare/d91ade9025700cb258e00dfd3eba256fa0b7435f...0.1.0) (2020-10-14)
 
 
 ### Features
