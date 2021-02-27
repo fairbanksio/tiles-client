@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/bsord/tiles-client/compare/0.2.0...0.3.0) (2021-02-27)
+
+
+### Features
+
+* **autoscale:** remove memory spec ([8fd46b1](https://github.com/bsord/tiles-client/commit/8fd46b138e355a49e694d1da881ae6d792875e89))
+
+
+
 # [0.2.0](https://github.com/bsord/tiles-client/compare/0.1.0...0.2.0) (2021-01-17)
 
 
