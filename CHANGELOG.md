@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/bsord/tiles-client/compare/0.3.0...0.4.0) (2021-04-28)
+
+
+### Features
+
+* **authentication:** implement google auth ([37ab947](https://github.com/bsord/tiles-client/commit/37ab947d03fb0f3accff8da9e88728a44c256131))
+
+
+
 # [0.3.0](https://github.com/bsord/tiles-client/compare/0.2.0...0.3.0) (2021-02-27)
 
 
