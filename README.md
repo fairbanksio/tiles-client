@@ -2,13 +2,13 @@
   Tiles
 </h1>
 
-<h1 align="center"><img align="center" src="https://raw.githubusercontent.com/Fairbanks-io/tiles-client/master/logo.png" height="50%" width="50%" alt="tiles-logo"/></h1>
+<h1 align="center"><img align="center" src="https://raw.githubusercontent.com/bsord/tiles-client/master/logo.png" height="50%" width="50%" alt="tiles-logo"/></h1>
 
-![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/fairbanksio/tiles-client.svg)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/fairbanksio/tiles-client.svg)
-![GitHub top language](https://img.shields.io/github/languages/top/Fairbanks-io/tiles-client.svg)
-![Docker Pulls](https://img.shields.io/docker/pulls/fairbanksio/tiles-client.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/Fairbanks-io/tiles-client.svg)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/bsord/tiles-client.svg)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bsord/tiles-client.svg)
+![GitHub top language](https://img.shields.io/github/languages/top/bsord/tiles-client.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/bsord/tiles-client.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/bsord/tiles-client.svg)
 
 <p align="center">Pixel art chatrooms with your friends!</p>
 
@@ -21,19 +21,19 @@ The following will need to be installed before proceeding:
 - Node v8+
 - Mongo DB
 - Nginx
-- [Tiles API](https://github.com/Fairbanks-io/tiles-api)
+- [Tiles API](https://github.com/bsord/tiles-api)
 
 #### Clone the Project
 
 ```sh
 # Clone it
-git clone https://github.com/Fairbanks-io/tiles-client.git
+git clone https://github.com/bsord/tiles-client.git
 cd tiles-client/
 ```
 
 #### Setup Backend API
 
-The frontend requires the Tiles API to be running for saving drawings and managing chats. To setup the backend API, please checkout the [Tiles API readme](https://github.com/Fairbanks-io/tiles-api/blob/master/README.md).
+The frontend requires the Tiles API to be running for saving drawings and managing chats. To setup the backend API, please checkout the [Tiles API readme](https://github.com/bsord/tiles-api/blob/master/README.md).
 
 #### Install & Launch the Frontend
 
@@ -85,8 +85,8 @@ server {
 The Tiles UI can also be launched via Docker using the following example:
 
 ```sh
-docker build -t Fairbanks-io/tiles-client .
-docker run -d -p 80:80 --name 'tiles-client' Fairbanks-io/tiles-client
+docker build -t bsord/tiles-client .
+docker run -d -p 80:80 --name 'tiles-client' bsord/tiles-client
 ```
 
 # Kubernetes
