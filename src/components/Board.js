@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import { CirclePicker } from 'react-color';
+import { Redirect } from "react-router-dom";
 import io from "socket.io-client";
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,15 +8,11 @@ import { RingLoader } from 'react-spinners';
 import { Icon, Segment, Input, Form, Divider, Header, Label} from 'semantic-ui-react';
 import PNGImage from 'pnglib-es6';
 import Draggable from 'react-draggable';
-import Chance from 'chance';
 
 import '../styles/Board.css';
 import '../styles/Chat.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-chat-widget/lib/styles.css';
-
-const nameGetter = new Chance();
-const getAName = () => nameGetter.first();
 
 const socketUrl = "https://" + window.REACT_APP_API;
   // Constructor for Shape objects to hold data for all drawn objects.
@@ -45,6 +42,8 @@ Shape.prototype.contains = function(mx, my) {
           (this.y <= my) && (this.y + this.h >= my);
 }
 
+
+
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +58,8 @@ class Board extends Component {
       innerHeight: window.innerHeight,
       messages: [],
       message: "",
-      username: getAName()
+      username: this.props.auth.name,
+      auth: this.props.auth
     };
 
     this.draggingPopup = false;
@@ -67,12 +67,15 @@ class Board extends Component {
     this.scale = 7;
   }
 
+  
+  
   handleHideClick = () => this.setState({ visible: false })
   handleShowClick = () => this.setState({ visible: true })
 
   getBoardLog = () => {
+    console.log(this.props)
     // Get all users from API
-    this.setState({fetchingLog: true})
+    
     axios
       .get('https://' + window.REACT_APP_API + '/tiles/' + this.props.match.params.boardId + '/log')
       .then(res => {
@@ -177,7 +180,6 @@ class Board extends Component {
 
 
   componentWillMount() {
-    
 		this.initSocket()
   }
 
@@ -401,75 +403,83 @@ class Board extends Component {
   
 
   render() {
-    const { boardState, visible, messages, socket} = this.state;
+    const { boardState, visible, messages, socket, username, auth} = this.state;
     return (
-
+      auth.isAuth ?
       
-      boardState ? 
+        boardState ? 
 
-      <div>
-        
-        <Segment basic inverted style={{padding:'0', margin: '0'}}>
-            <div style={{"textAlign":"left", margin: '0', padding: '0'}}>
-              <ToastContainer
-                position="top-right"
-                autoClose={10000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnVisibilityChange={false}
-                draggable
-                pauseOnHover
-              />
-              <canvas style={{display:'block'}} ref="canvas" onMouseUp={(e)=>{this.handleMouseUp(e)}} onMouseDown={(e)=>{ this.changeTileColor(e) }} onMouseMove={(e)=>{ this.changeTileColorMouseMove(e) }} onContextMenu={(e)=>{this.onContextMenu(e)}}/>
-            </div>
+          <div>
             
-        </Segment>
-        {visible ? 
-          <Draggable handle=".handle">
-            <div style={{position:'absolute', backgroundColor: '#FFF', top: '100px', left: '100px', padding: '1em',maxWidth:'265px', borderRadius: '5px'}} >
-              <Header dividing as='h3' className='handle'>Tiles</Header>
-              <CirclePicker styles={{boxShadow: '0 0 0 0px rgba(0,0,0,0)'}}
-                color={ this.state.color }
-                onChangeComplete={ this.handleColorPicker }
-              />
+            <Segment basic inverted style={{padding:'0', margin: '0'}}>
+                <div style={{"textAlign":"left", margin: '0', padding: '0'}}>
+                  <ToastContainer
+                    position="top-right"
+                    autoClose={10000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange={false}
+                    draggable
+                    pauseOnHover
+                  />
+                  <canvas style={{display:'block'}} ref="canvas" onMouseUp={(e)=>{this.handleMouseUp(e)}} onMouseDown={(e)=>{ this.changeTileColor(e) }} onMouseMove={(e)=>{ this.changeTileColorMouseMove(e) }} onContextMenu={(e)=>{this.onContextMenu(e)}}/>
+                </div>
+                
+            </Segment>
+            {visible ? 
+              <Draggable handle=".handle">
+                <div style={{position:'absolute', backgroundColor: '#FFF', top: '100px', left: '100px', padding: '1em',maxWidth:'265px', borderRadius: '5px'}} >
+                  <Header dividing as='h3' className='handle'>{username}<Label as='a' onClick={(e)=>auth.logout()}>
+                    <Icon name='logout' />
+                    Logout
+                  </Label></Header>
+                  <CirclePicker styles={{boxShadow: '0 0 0 0px rgba(0,0,0,0)'}}
+                    colors={["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#ffffff", "#222222"]}
+                    color={ this.state.color }
+                    onChangeComplete={ this.handleColorPicker }
+                  />
 
-              <div style={{background:'white', textAlign:'left', marginTop:'15px'}}>
-                <Messages socket={socket} messages={messages} boardId={this.props.match.params.boardId} username={this.state.username}/>
-              </div>
-              <Divider inverted />
-              <Label as='a'>
-                <Icon name='share' />
-                Share
-              </Label>
-              <Label as='a' onClick={(e)=>this.download("download.png", this.getBoardPng(boardState.tiles,5))}>
-                <Icon name='save' />
-                Save
-              </Label>
-              <Label as='a'>
-                <Icon name='flag' />
-                Report
-              </Label>
+                  <div style={{background:'white', textAlign:'left', marginTop:'15px'}}>
+                    <Messages socket={socket} messages={messages} boardId={this.props.match.params.boardId} username={this.state.username}/>
+                  </div>
+                  <Divider inverted />
+                  <Label as='a'>
+                    <Icon name='share' />
+                    Share
+                  </Label>
+                  <Label as='a' onClick={(e)=>this.download("download.png", this.getBoardPng(boardState.tiles,5))}>
+                    <Icon name='save' />
+                    Save
+                  </Label>
+                  <Label as='a'>
+                    <Icon name='flag' />
+                    Report
+                  </Label>
 
-            </div>
-          </Draggable>
-        :null
-        }
-      </div>
+                </div>
+              </Draggable>
+            :null
+            }
+          </div>
 
-    :
-    <div className="centered-vh">
-      <RingLoader
-        sizeUnit={"px"}
-        size={125}
-        color={'#36D8B7'}
-      />
-    </div>
+        :
+          <div className="centered-vh">
+            <RingLoader
+              sizeUnit={"px"}
+              size={125}
+              color={'#36D8B7'}
+            />
+          </div>
+        
+      :
+      <Redirect to={{
+        pathname: '/signin',
+        state: { ref: this.props.match.params.boardId }
+      }}/>
       
-      
-      
-      );
+    );
   }
 }
 

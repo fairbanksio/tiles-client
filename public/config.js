@@ -1,1 +1,1 @@
-window.REACT_APP_API="api.host.tld"
+window.REACT_APP_API="api.popcan.dev"
