@@ -5,3 +5,4 @@ metadata:
 data:
   config.js: |
     window.REACT_APP_API="{{ .Values.apiHost }}"
+    window.REACT_APP_GOOGLE_CLIENT="{{ .Values.googleClient }}"
