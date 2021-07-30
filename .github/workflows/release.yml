@@ -31,6 +31,7 @@ jobs:
           sed -r -i "s/(version:[^*]|appVersion:[^*])([[:alnum:].]*)/\1$PACKAGE_VERSION/g" ./chart/Chart.yaml
           # Output new version for other steps
           echo "::set-output name=version::$PACKAGE_VERSION"
+          
       - name: Commit changes
         uses: EndBug/add-and-commit@v7.2.1
         with:
