@@ -1,4 +1,4 @@
-FROM node:12-slim as base
+FROM node:14-slim as base
 ENV NODE_ENV=production
 EXPOSE 3000
 RUN mkdir /app && chown -R node:node /app
@@ -38,5 +38,7 @@ RUN npm run build
 
 FROM nginx:1.16-alpine
 COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx/error.html /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

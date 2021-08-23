@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: rgb(255, 255, 255);
   padding: 10px;
   color: #36D8B7;
   margin-bottom: 10px;
@@ -38,43 +38,14 @@ body {
 }
 @media screen and (prefers-color-scheme: light) {
   body {
-    background-color: #36D8B7;
-    color: #222222;
+    background-color: #222222;
+    color: #36D8B7;
     font-family: 'Roboto', sans-serif;
   }
 }
 
-#container {
-  width:100vw;
-  text-align: center;
-  padding-top: 25px;
-}
-
-#left {
-  float:left;
-  width: 50%;
-}
-
-#right {
-  float: right;
-  width: 50%;
-}
-
-.centered {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100%;
-}
-
-.centered-vh {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-::-webkit-scrollbar {
-  display: none;
+.ui.inverted.segment, .ui.primary.inverted.segment {
+  background: #292a2d;
+  color: rgba(255,255,255,.9);
+  border: 1px solid #3c4043
 }
