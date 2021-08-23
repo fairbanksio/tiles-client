@@ -53,7 +53,7 @@ jobs:
         uses: bsord/helm-push@v4
         with:
           access-token: ${{ secrets.CM_API_KEY }}
-          repository-url: ${{ secrets.CM_REPO_URL }} 
+          registry-url: ${{ secrets.CM_REPO_URL }} 
           force: true
           chart-folder: chart
       
