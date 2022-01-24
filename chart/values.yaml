@@ -68,3 +68,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: kubernetes.io/hostname
+  #   whenUnsatisfiable: ScheduleAnyway
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/instance: tiles-tiles-api
