@@ -1,6 +1,6 @@
 {
   "name": "tiles-client",
-  "version": "0.5.12",
+  "version": "0.5.13-alpha.0",
   "description": "Api for tiles client",
   "author": "Brandon Sorgdrager",
   "repository": {
