@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: "actions/checkout@v2"
-        with:
-          ref: ${{ github.ref }}
 
       - name: Update version in version files
         id: update-version
@@ -35,7 +33,7 @@ jobs:
           push: "--force"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
   docker-build:
     name: Docker Build
     runs-on: ubuntu-latest
