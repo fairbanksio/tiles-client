@@ -6,6 +6,36 @@ on:
       - 'master'
 
 jobs:
+  bump-version:
+    name: "Bump Version"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: "actions/checkout@v2"
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Update version in version files
+        id: update-version
+        run: |
+          # Bump version
+          npm version --no-git-tag-version patch
+          # Get new bumped version
+          PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+          # Update chart version
+          sed -r -i "s/(version:[^*]|appVersion:[^*])([[:alnum:].]*)/\1$PACKAGE_VERSION/g" ./chart/Chart.yaml
+          # Output new version for other steps
+          echo "::set-output name=version::$PACKAGE_VERSION"
+          
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7.2.1
+        with:
+          message: "chore(version): Bump to: ${{ steps.update-version.outputs.version }}"
+          tag: "${{ steps.get-version.outputs.version }}"
+          push: "--force"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   docker-build:
     name: Docker Build
     runs-on: ubuntu-latest
@@ -90,6 +120,7 @@ jobs:
       - name: Update chart image tag
         run: |
           sed -r -i 's/(appVersion:[^*])([[:alnum:].]*)/\1${{ steps.vars.outputs.sha_short }}/g' ./chart/Chart.yaml
+
       - name: Lint Helm chart
         run: helm lint ./chart
 
