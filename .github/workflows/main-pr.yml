@@ -1,4 +1,4 @@
-name: Tests
+name: Pull Request
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ jobs:
     name: "Bump Version"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
+      - name: Checkout
         uses: "actions/checkout@v2"
         with:
           ref: ${{ github.ref }}
@@ -35,7 +35,7 @@ jobs:
           push: "--force"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          
   docker-build:
     name: Docker Build
     runs-on: ubuntu-latest
