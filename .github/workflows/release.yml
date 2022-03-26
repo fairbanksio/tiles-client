@@ -52,11 +52,10 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT }}
         with:
-          source_folder: 'chart'
+          source_folder: 'chart/.'
           destination_repo: 'bsord/helm-charts'
-          destination_folder: 'sources/tiles-client'
-          destination_base_branch: 'branch-name'
-          destination_head_branch: 'tiles-client'
+          destination_folder: 'sources/tiles-client/'
+          destination_head_branch: 'tiles-client' 
           user_email: 'brandon.sorgdrager@gmail.com'
           user_name: 'bsord'
 
