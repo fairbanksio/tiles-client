@@ -55,6 +55,7 @@ jobs:
           source_folder: 'chart/.'
           destination_repo: 'bsord/helm-charts'
           destination_folder: 'sources/tiles-client/'
+          destination_base_branch: 'master'
           destination_head_branch: 'tiles-client' 
           user_email: 'brandon.sorgdrager@gmail.com'
           user_name: 'bsord'
