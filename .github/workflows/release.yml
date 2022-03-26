@@ -48,7 +48,7 @@ jobs:
           tags: "${{ steps.bump-tag.outputs.new_tag }}"
 
       - name: 
-        uses: paygoc6/action-pull-request-another-repo@v1.0.5
+        uses: paygoc6/action-pull-request-another-repo@v1.0.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT }}
         with:
