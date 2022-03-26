@@ -47,7 +47,7 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           tags: "${{ steps.bump-tag.outputs.new_tag }}"
 
-      - name: 
+      - name: Push Helm Chart to bsord/helm-charts
         uses: paygoc6/action-pull-request-another-repo@v1.0.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT }}
