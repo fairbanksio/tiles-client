@@ -47,6 +47,19 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           tags: "${{ steps.bump-tag.outputs.new_tag }}"
 
+      - name: 
+        uses: paygoc6/action-pull-request-another-repo@v1.0.5
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAT }}
+        with:
+          source_folder: 'chart'
+          destination_repo: 'bsord/helm-charts'
+          destination_folder: 'sources/tiles-client'
+          destination_base_branch: 'branch-name'
+          destination_head_branch: 'tiles-client'
+          user_email: 'brandon.sorgdrager@gmail.com'
+          user_name: 'bsord'
+
       - name: Push Helm chart
         uses: bsord/helm-push@v4
         with:
