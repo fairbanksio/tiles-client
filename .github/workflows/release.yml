@@ -47,14 +47,15 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           tags: "${{ steps.bump-tag.outputs.new_tag }}"
 
-      - name: Push Helm Chart
+      - name: Package and publish Helm Chart
         run: |
+          helm package .
           CLONE_DIR=$(mktemp -d)
           git config --global user.email "brandon.sorgdrager@gmail.com"
           git config --global user.name "bsord"
           git clone "https://${{ secrets.PAT }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
-          mkdir -p $CLONE_DIR/sources/tiles-client/
-          cp -r "chart/." "$CLONE_DIR/sources/tiles-client/"
+          mkdir -p $CLONE_DIR/packages/
+          cp "*.tgz" "$CLONE_DIR/packages/"
           cd "$CLONE_DIR"
           git add .
           git commit --message "Update from https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
