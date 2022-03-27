@@ -2,10 +2,6 @@ import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
   Button,
-  Grid,
-  Header,
-  Message,
-  Segment,
   Dropdown
 } from 'semantic-ui-react';
 import { GoogleLogin } from 'react-google-login';
@@ -46,7 +42,6 @@ const AuthPage = (props) => {
     setloginInfo(...loginInfo, { message: "error signing in with google" });
   }
 
-  const authTitle = (props.signup ? "Sign up" : "Sign In");
   const googleText = (props.signup ? 'register_with_google' : 'Sign in with Google');
   console.log(Auth.isAuth)
 

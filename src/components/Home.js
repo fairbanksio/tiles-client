@@ -3,52 +3,14 @@ import '../styles/App.css';
 import axios from 'axios'
 import { RingLoader } from 'react-spinners';
 import { Link } from "react-router-dom";
-import { Input, Button, Divider, Form, Grid, Segment, Image, Rail, Menu, Container, Header, Icon, Dropdown} from 'semantic-ui-react';
+import { Input, Grid, Segment, Image, Menu } from 'semantic-ui-react';
 import PNGImage from 'pnglib-es6'
-import StackGrid from "react-stack-grid";
 import AuthButton from './AuthButton'
-import { css } from '@emotion/core';
-import moment from 'moment';
 import Filter from 'bad-words';
 
 var filter = new Filter();
 filter.addWords('maga'); // Items listed here will be replaced with ****
 filter.removeWords('hells', 'god'); // Items listed here will NOT be filtered
-
-const options = [
-  {
-    key: 'today',
-    text: 'today',
-    value: 'today',
-    content: 'Today',
-  },
-  {
-    key: 'this week',
-    text: 'this week',
-    value: 'this week',
-    content: 'This Week',
-  },
-  {
-    key: 'this month',
-    text: 'this month',
-    value: 'this month',
-    content: 'This Month',
-  },
-]
-
-const DropdownExampleInlineTwo = () => (
-
-      <Dropdown
-      placeholder='filter'
-        inline
-        icon='filter'
-        header='Adjust time span'
-        options={options}
-        defaultValue={options[1].value}
-      />
-
-)
-
 class Home extends Component {
   constructor() {
     super();
@@ -139,7 +101,7 @@ class Home extends Component {
 
           <Grid.Column width={12}>
             <Menu inverted color="grey">
-            <img style={{  height: "45px", padding: "-.75em"}} src='/popcanlogo.png' />
+            <img style={{  height: "45px", padding: "-.75em"}} src='/popcanlogo.png' alt='logo'/>
               <Menu.Item position='right'>
                 <AuthButton/>
               </Menu.Item>
