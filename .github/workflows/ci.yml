@@ -165,7 +165,7 @@ jobs:
 
       - name: Install and Test chart
         run: |
-          helm install test-release ./chart --wait
+          helm install test-release ./chart --wait --debug
           helm test test-release
 
   release:
