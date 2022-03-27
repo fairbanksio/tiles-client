@@ -52,7 +52,7 @@ jobs:
           CLONE_DIR=$(mktemp -d)
           git clone "https://${{ secrets.GITHUB_TOKEN }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
           mkdir -p $CLONE_DIR/sources/tiles-client/
-          cp "chart/." "$CLONE_DIR/sources/tiles-client/"
+          cp -r "chart/." "$CLONE_DIR/sources/tiles-client/"
           cd "$CLONE_DIR"
           git add .
           git commit --message "Update from https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
