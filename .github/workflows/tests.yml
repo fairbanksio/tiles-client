@@ -90,8 +90,8 @@ jobs:
 
       - name: Update chart image tag
         run: |
-          sed -r -i 's/(appVersion:[^*])([[:alnum:].]*)/\1${{ steps.vars.outputs.sha_short }}/g' ./chart/Chart.yaml
-          
+          sed -r -i 's/(appVersion:[^*])([[:alnum:].]*.*)/\1${{ steps.vars.outputs.sha_short }}/g' ./chart/Chart.yaml
+
       - name: Lint Helm chart
         run: helm lint ./chart
 
