@@ -69,10 +69,21 @@ jobs:
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: 'trivy-results.sarif'
+  
+  helm-lint:
+    name: Validate Helm chart
+    needs: docker-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Lint Helm chart
+        run: helm lint ./chart
 
   docker-build:
     name: Docker Build
-    needs: [vuln-scan, node-lint, node-test]
+    needs: [vuln-scan, node-lint, node-test, helm-lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -132,9 +143,6 @@ jobs:
       - name: Update chart image tag
         run: |
           sed -r -i 's/(appVersion:[^*])([[:alnum:].]*.*)/\1${{ steps.vars.outputs.sha_short }}/g' ./chart/Chart.yaml
-
-      - name: Lint Helm chart
-        run: helm lint ./chart
 
       - name: Create Kind cluster
         uses: helm/kind-action@v1.2.0
