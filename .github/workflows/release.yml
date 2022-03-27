@@ -12,8 +12,8 @@ on:
       - "develop"
 
 jobs:
-  node-checks:
-    name: Node checks
+  node-lint:
+    name: Lint Node.JS
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,11 +27,23 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Audit dependencies
-        run: npm audit --audit-level=critical
-
       - name: Lint Code
         run: npm run lint
+
+  node-test:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Run test suite
         run: npm run test
@@ -42,9 +54,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: npm install
 
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
@@ -63,7 +72,7 @@ jobs:
 
   docker-build:
     name: Docker Build
-    needs: [node-checks, vuln-scan]
+    needs: [node-checks, vuln-scan, node-lint, node-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
