@@ -50,6 +50,8 @@ jobs:
       - name: Push Helm Chart
         run: |
           CLONE_DIR=$(mktemp -d)
+          git config --global user.email "brandon.sorgdrager@gmail.com"
+          git config --global user.name "bsord"
           git clone "https://${{ secrets.GITHUB_TOKEN }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
           mkdir -p $CLONE_DIR/sources/tiles-client/
           cp -r "chart/." "$CLONE_DIR/sources/tiles-client/"
