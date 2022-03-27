@@ -47,22 +47,13 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           tags: "${{ steps.bump-tag.outputs.new_tag }}"
 
-      - name: Push chart to bsord/helm-charts
+      - name: Push Helm Chart
         run: |
           CLONE_DIR=$(mktemp -d)
           git clone "https://${{ secrets.GITHUB_TOKEN }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
           mkdir -p $CLONE_DIR/sources/tiles-client/
-          cp chart/. "$CLONE_DIR/sources/tiles-client/"
+          cp "chart/." "$CLONE_DIR/sources/tiles-client/"
           cd "$CLONE_DIR"
           git add .
           git commit --message "Update from https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
           git push -u origin master
-
-      - name: Push Helm chart
-        uses: bsord/helm-push@v4
-        with:
-          access-token: ${{ secrets.CM_API_KEY }}
-          registry-url: ${{ secrets.CM_REPO_URL }} 
-          force: true
-          chart-folder: chart
-      
