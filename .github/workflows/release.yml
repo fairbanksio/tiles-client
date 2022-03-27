@@ -53,7 +53,7 @@ jobs:
           CLONE_DIR=$(mktemp -d)
           git config --global user.email "brandon.sorgdrager@gmail.com"
           git config --global user.name "bsord"
-          git clone "https://${{ secrets.HELM_CHARTS_PAT }}@github.com/fairbanks-io/helm-charts.git" "$CLONE_DIR"
+          git clone "https://${{ secrets.HELM_CHARTS_PAT }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
           
           # Package chart and push commit
           helm package ./chart
