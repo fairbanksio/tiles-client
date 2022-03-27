@@ -48,8 +48,26 @@ jobs:
       - name: Run test suite
         run: npm run test
 
-  vuln-scan:
-    name: Vulnerability Scan
+  node-audit:
+    name: Critical Vulnerability Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for critical vulnerabilities
+        run: npm audit --audit-level=critical
+
+  vuln-report:
+    name: Vulnerability Report
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -81,7 +99,7 @@ jobs:
 
   docker-build:
     name: Docker Build
-    needs: [vuln-scan, node-lint, node-test, helm-lint]
+    needs: [vuln-report, node-lint, node-test, node-audit, helm-lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
