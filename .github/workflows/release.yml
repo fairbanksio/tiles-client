@@ -82,7 +82,7 @@ jobs:
 
   docker-build:
     name: Docker Build
-    needs: [vuln-scan, node-lint, node-test]
+    needs: [vuln-scan, node-lint, node-test, helm-lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -124,7 +124,7 @@ jobs:
 
   chart-test:
     name: Validate Helm chart
-    needs: [docker-build,helm-lint]
+    needs: docker-build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
