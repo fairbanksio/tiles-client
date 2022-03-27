@@ -11,12 +11,7 @@ on:
       - "master"
       - "main"
       - "develop"
-  pull_request:
-    branches:
-      - "master"
-      - "main"
-      - "develop"
-
+      
 jobs:
   node-checks:
     name: Node checks
