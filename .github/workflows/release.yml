@@ -9,10 +9,12 @@ on:
   push:
     branches:
       - "master"
+      - "main"
       - "develop"
   pull_request:
     branches:
       - "master"
+      - "main"
       - "develop"
 
 jobs:
@@ -37,7 +39,7 @@ jobs:
       - name: Lint Code
         run: npm run lint
 
-      - name: run test suite
+      - name: Run test suite
         run: npm run test
 
   vuln-scan:
