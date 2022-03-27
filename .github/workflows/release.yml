@@ -42,7 +42,6 @@ jobs:
 
   vuln-scan:
     name: Vulnerability Scan
-    needs: docker-build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,6 +64,7 @@ jobs:
 
   docker-build:
     name: Docker Build
+    needs: [node-checks, vuln-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -138,7 +138,7 @@ jobs:
 
   release:
     name: "Release"
-    needs: [chart-test, vuln-scan]
+    needs: [chart-test]
     runs-on: ubuntu-latest
     steps:
 
