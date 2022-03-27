@@ -49,12 +49,15 @@ jobs:
 
       - name: Package and publish Helm Chart
         run: |
-          helm package ./chart
+          # Setup auth and workspace
           CLONE_DIR=$(mktemp -d)
           git config --global user.email "brandon.sorgdrager@gmail.com"
           git config --global user.name "bsord"
-          git clone "https://${{ secrets.PAT }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
+          git clone "https://${{ secrets.HELM_CHARTS_PAT }}@github.com/bsord/helm-charts.git" "$CLONE_DIR"
           mkdir -p $CLONE_DIR/packages/
+
+          # Package chart and push commit
+          helm package ./chart
           cp *.tgz "$CLONE_DIR/packages/"
           cd "$CLONE_DIR"
           git add .
