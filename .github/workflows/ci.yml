@@ -164,9 +164,27 @@ jobs:
         uses: helm/kind-action@v1.2.0
 
       - name: Install and Test chart
+        id: test-chart
         run: |
           helm install test-release ./chart --wait --debug
           helm test test-release
+
+      - name: Debug Helm Chart
+        if: failure() && steps.test-chart.outcome == 'failure'
+        run: |
+          kubectl get events
+          kubectl describe hpa
+          kubectl describe deploy
+          kubectl describe ing
+          kubectl describe pdb
+          kubectl describe svc
+          kubectl describe serviceaccount
+          kubectl describe po
+
+          for pod in `kubectl get po -o json |  jq '.items[] | .metadata.name' | sed 's/"//g'` ; do
+            echo $pod
+            kubectl logs $pod 
+          done
 
   release:
     name: "Release"
@@ -196,6 +214,17 @@ jobs:
           # Update Helm chart version
           sed -r -i "s/(version:[^*]|appVersion:[^*])([[:alnum:].]*.*)/\1${{ steps.bump-tag.outputs.new_tag }}/g" ./chart/Chart.yaml
 
+      - name: Build Docker Tags
+        id: docker-tags
+        run: |
+          CUR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          if [[ $CUR_BRANCH = "main" || $CUR_BRANCH = "master" ]]; then
+              TAGS="${{ github.repository }}:${{ steps.bump-tag.outputs.new_tag }},{{ github.repository }}:latest"
+          else
+              TAGS="${{ github.repository }}:${{ steps.bump-tag.outputs.new_tag }}"
+          fi
+          echo "::set-output name=tags::${TAGS}"
+          
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
@@ -222,7 +251,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ github.repository }}:${{ steps.bump-tag.outputs.new_tag }}
+          tags: ${{ steps.docker-tags.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
