@@ -219,7 +219,7 @@ jobs:
         run: |
           CUR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
           if [[ $CUR_BRANCH = "main" || $CUR_BRANCH = "master" ]]; then
-              TAGS="${{ github.repository }}:${{ steps.bump-tag.outputs.new_tag }},{{ github.repository }}:latest"
+              TAGS="${{ github.repository }}:${{ steps.bump-tag.outputs.new_tag }},${{ github.repository }}:latest"
           else
               TAGS="${{ github.repository }}:${{ steps.bump-tag.outputs.new_tag }}"
           fi
